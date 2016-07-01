@@ -1,57 +1,38 @@
-Haiku
-=======================
-**[Homepage](https://www.haiku-os.org/)
-| [Mailing Lists](https://www.haiku-os.org/community/ml)
-| [IRC Channels](https://www.haiku-os.org/community/irc)
-| [Issue Tracker](https://dev.haiku-os.org/)
-| [API docs](https://api.haiku-os.org)**
+Deadpixi Haiku
+==============
 
-Haiku is an open-source operating system that specifically targets personal
-computing. Inspired by the BeOS, Haiku is fast, simple to use, easy to learn
-and yet very powerful.
+This is a port of the Haiku Operating System, an open-source operating system that aims to clone and improve upon the class BeOS operating system.
 
-Goals
-------------
- * Sensible defaults with minimal configuration required.
- * Clean, clear, concise code.
- * Unified desktop environment.
+Changes from Mainline Haiku
+===========================
 
-Trying Haiku
----------------
-Haiku provides pre-built [nightly images](http://download.haiku-os.org/) and
-[release images](https://www.haiku-os.org/get-haiku). Haiku is compatible
-with a large variety of hardware, but in case you don't want to "take the
-plunge" and install Haiku on bare metal, you can install it on a virtual
-machine (VM) instead. If you've never used a VM before, you can follow one of
-the ["Emulating Haiku"](https://www.haiku-os.org/guides/virtualizing/) guides.
+Deadpixi Haiku has one overarching goal:
 
-Compiling Haiku
----------------
-See `ReadMe.Compiling`.
+* Reach stability. Once stability has been attained, enter maintenance mode and never leave it. Once maintenance mode has been entered, only the following changes are allowed:
+    - Bugfixes
+    - Changes to maintain standards compliance (POSIX, etc)
+    - Translations to new human languages, or improvements to existing translations
+    - Support for new common file formats
+    - Documentation improvements
+    - Accessibility improvements for users with differing physical and mental abilities
 
-Contributing
--------------------
-Haiku is a meritocratic open source project with a large variety of tasks. Even
-if you can't write code, *you can still help*! Haiku needs designers,
-(technical) writers, translators, testers... Get involved and help out!
+Specifically, once maintenance mode has been entered, no new APIs will be introduced and, barring bugfixes, no existing APIs will be changed. No fundamental UI changes will be made. Part of the charm of the original BeOS was that the entire sytem could fit inside a single programmer's head. Deadpixi Haiku will attempt to recapture that charm.
 
-### Contributing code
-If you're submitting a patch to us, please make sure you're following the
-[patch submitting guidelines](https://dev.haiku-os.org/wiki/CodingGuidelines/SubmittingPatches).
+The Haiku OS team has done amazing work, and Deadpixi Haiku cannot hope to equal their work. However, in the interest of simplifying the code, several features added by the Haiku OS team will be removed from Deadpixi Haiku. In general, features that are not needed for a simple, single-user operating system with most data stored locally will be removed. Most importantly, the following features will be removed:
 
-If you're having trouble finding something in the source tree, you can use
-one of our OpenGrok servers:
+* The Package Filesystem and associated utilities, applications, and servers. PackageFS might be the most interesting thing to happen to package management on any platform in years, and its inclusion in Haiku OS is fascinating work. However, it is a large amount of code both inside and outside of the kernel. A user-level package manager for third-party applications is a better fit for Deadpixi Haiku.
+* The bootloader. GRUB will be used in preference. The kernel will be modified to be Multiboot-compliant.
+* Support for non-x86\_64 architectures. Haiku OS was stalled for years by the requirement to maintain binary compatibility with classic BeOS. In keeping with that goal, the 32-bit i386 version of Haiku requires a complex build system and customized versions of the compiler and related tools. Deadpixi Haiku will attempt to maintain source-level compatibility with Haiku as it exists today (2016), but makes no attempt to support any architecture other than x86\_64. This architecture is the "way of the future".
+* The launch_server and its associated utilities and functionality. Again, this is amazing work and a great addition to Haiku, but Deadpixi Haiku targets users who prefer a simple startup script.
+* The print\_server, to be replaced with CUPS. The standard printing APIs will communicate with CUPS under the hood.
+* Custom decorator support, remote drawing support, and HTML5 support from the app server. This is interesting work, but it's too complicated for Deadpixi Haiku.
+* Jam as a build system. A more mainstream system based on make would be simpler and easier to maintain.
+* Spport for filesystems other than BFS, CDDAFS, EXFAT, FAT, IS9660, and UDF.
+* POP3 support.
+* Multiuser support. This is nascent in Haiku OS; Deadpixi Haiku will never include it.
 
- * http://xref.plausible.coop/ (provided by Landon Fuller)
- * http://code.metager.de/source/xref/haiku (provided by MetaGer)
+A few features will be added in Deadpixi Haiku and will be backported to Haiku if possible:
 
-### Contributing documentation
-The main piece of documentation that still needs work are the API docs (found
-in the tree at `docs/user`). Just find an undocumented class, write
-documentation for it, and [submit a patch](https://dev.haiku-os.org/wiki/CodingGuidelines/SubmittingPatches).
-
-### Contributing translations
-See [wiki:i18n](https://dev.haiku-os.org/wiki/i18n).
-
-### Contributing software ports
-See [HaikuPorts](https://github.com/haikuports/haikuports/).
+* Encrypted block devices. This makes using Deadpixi Haiku safer on mobile computers, as data will be difficult or impossible to recover without a password.
+* Encrypted swap file support.
+* Support for installation with /boot/home on a separate partition, to facilitate installation on an encrypted block device.
