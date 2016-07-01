@@ -36,3 +36,4 @@ A few features will be added in Deadpixi Haiku and will be backported to Haiku i
 * Encrypted block devices. This makes using Deadpixi Haiku safer on mobile computers, as data will be difficult or impossible to recover without a password.
 * Encrypted swap file support.
 * Support for installation with /boot/home on a separate partition, to facilitate installation on an encrypted block device.
+* Better support for virtualized devices and running in paravirtualized environments (virtio, SPICE, etc).
